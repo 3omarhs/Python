@@ -1,0 +1,333 @@
+Global spending on machine learning & Artificial Intelligence (AI) systems is on the rise. Western Europe is a particularly interesting market, as machine learning and AI expenditure in both the public and private sector is expected to increase considerably. The European general IT-skills shortage continues to drive outsourcing. Combined with an increased interest among numerous sectors in machine learning and AI solutions, this offers you good opportunities.
+
+1. Product description
+
+What is Artificial Intelligence?
+
+Artificial Intelligence (AI) refers to the ability of machines to carry out ‘smart tasks’. It is any intelligence demonstrated by a machine, creating optimal solutions to problems. These optimal solutions are usually pre-programmed. However, rather than following a single repetitive motion, AI can adapt to different situations.
+
+Microsoft refers to AI as a machine’s ability to perform cognitive functions, which are normally associated with humans, and can include learning, reasoning, problem solving and sometimes also human behaviour, such as creativity.
+
+There are three types of AI:
+
+narrow AI general AI super AI
+
+Narrow AI
+
+Narrow AI is good at performing single and specific tasks. Examples are computer chess, speech and image recognition, as well as Google translate. It also includes weather forecasts, sales predictions and purchase suggestions. This is the only real form of artificial intelligence that has been achieved so far.
+
+General AI
+
+General AI is when a machine can perform a range of intellectual tasks like a human being. It is considered the type of AI that can understand and reason its environment. Despite popular opinion, this form of AI is still hard to achieve. It requires a computer or robot to think abstractly.
+
+Super AI
+
+Super AI will be achieved when AI out-smarts the human mind in every field, including general wisdom, creativity and social skills.
+
+What is Machine Learning?
+
+Machine learning is a specific branch of AI. Its concept is founded on the ability of machines to learn by themselves, instead of humans teaching computers everything they need to know. This allows machines to imitate and adapt human-like behaviour. Daily examples of machine learning applications are Facebook’s and mobile facial recognition, product recommendations by Amazon and Google maps indicating the fastest route.
+
+Cassie Kozyrkov (Chief Decision Intelligence Engineer, Google) explains machine learning by referring to recognising the image of a cat. In traditional programming, someone would think about all kinds of pixels, labels and other indicators to develop the best possible model (a set of instructions). Machine learning uses a ‘completely different programming paradigm’: it just gives examples of cat images and not-cat images and lets the computer find the patterns itself.
+
+Machine learning is widely recognised as a concept that offers solutions for numerous problems, across a lot of sectors like:
+
+security (data and personal)
+
+financial services
+
+healthcare
+
+manufacturing
+
+marketing
+
+transportation (automotive industry)
+
+There are three types of machine learning:
+
+supervised learning unsupervised learning reinforcement learning
+
+Supervised learning
+
+Supervised machine learning uses an algorithm with the correct label for a dataset of examples. Later, it uses its model to label new input by finding similarities in characteristics (indicators, predictors) between the examples and new input. Supervised learning systems need to know the labels that you want upfront. In general, companies prefer to phrase the solution to a problem by means of supervised learning.
+
+Unsupervised learning
+
+Unsupervised learning does not include pre-specified label input. It simply means that new input is grouped in terms of similarities at random. A computer analyses certain input and returns it as clustered groups. There are many different characteristics it can use to define similarities and thus many different ways to cluster the same input. This method is relevant when you want to let a machine specify patterns and groups, but do not know upfront what you are looking for (labels).
+
+Reinforcement learning
+
+Reinforcement learning refers to an algorithm that learns to react to its environment. This is the most complex form of machine learning. In this concept, a machine (such as a robot) performs an action in its environment. This is interpreted into a reward and representation of the state, which are fed back to the machine. This form of learning is closest to how a human brain works and to how a human develops.
+
+Why do European companies outsource machine learning & AI services?
+
+Lack of in-house technical skills
+
+European companies are seeing the advantage of (custom) machine learning & AI solutions for their company. However, they usually do not have in-house development skills, as this requires specific knowledge, expertise and tools. This often leads them to outsource the development of their machine learning and AI development.
+
+Tip: European companies often require proof of your technical skills. Provide references, testimonials and examples of recent work, preferably on your website.
+
+Cost reduction
+
+For 60% of executives, cost reduction is their main reason for outsourcing information technology (IT). This confirms that cost reduction continues to be the main driver for European companies to outsource IT services like machine learning and AI services.
+
+Tips: Offer competitive pricing, but don’t compromise on the quality of your services.
+
+Be transparent in your pricing: avoid hidden costs.
+
+Maintain a fixed price model, except for support services.
+
+What are the challenges when it comes to outsourcing machine learning & AI services?
+
+Data security
+
+Data security is of the utmost importance to European companies. They generally perceive offshore data security to be of inferior quality.
+
+The European Union currently considers data appropriately protected in a select number of countries:
+
+the 28 countries of the European Union
+
+the three countries inside the European Economic Area - Iceland, Liechtenstein and Norway
+
+countries with “adequate” data protection laws - Andorra, Argentina, the British Islands, Canada, Faroe Islands, Israel, New Zealand, Switzerland and Uruguay, as well as the United States of America (limited to the Privacy Shield framework)
+
+This makes it even more important for you to show potential European buyers that your machine learning and AI services are secure.
+
+Tips: Provide clear information about your company’s data security and privacy measures.
+
+Apply for standards like the ISO 27000-series on information security to support your commitment to data security.
+
+Offer a Non-Disclosure Agreement.
+
+Make sure you comply with European data protection rules. Look at the requirements section for more information.
+
+Ethics and bias
+
+The ethics around the application of AI and machine learning can be a major consideration. This refers to:
+
+the intended use of the technology, for instance for limiting personal freedom
+
+the potential bias or incompleteness of the data sets: for example, consider a recruiting model that predicts whether a candidate can be successful. Historical data on this subject will by definition reflect the cultural biases of the past, such as the participation of women in certain sectors of society.
+
+the bias introduced by limitations of the machine learning technology themselves: for example, facial recognition software tends to be less effective with people of darker skin; which itself is the consequence of a neutral factor (contrast) but can lead to “biased” results.
+
+Tip: Be aware and proactive in your communication regarding the application and potential bias in machine learning outcomes.
+
+Clear communication
+
+Good communication between customer and service provider is essential to custom machine learning and AI development. Unclear communication may cause misunderstandings and disagreements, which can lead to disputes with your buyer, especially when it comes to unsupervised machine learning.
+
+Developing a good solution based on machine learning & AI starts with very clearly defining the business problem. As situations might change during the project, you should stay in close contact with your buyer. Findings during development might lead to new insights on the solution as well, which you should discuss with your buyer.
+
+And of course:
+
+What is your budget?
+
+What are the deadlines of the project?
+
+The extent of communication with your buyer a project requires also depends on the type of contract:
+
+Fixed
+
+With a fixed price contract you agree on specifications, budget and deadlines in advance. During the machine learning solution development you keep your buyer up-to-date, but you do not need to negotiate further. This type of contract is suitable for relatively simple and clearly defined projects.
+
+However, fixed price contracts assume that the buyer can adequately specify the requirements for the solution. In new and emerging technologies, this is often not the case. Hence it may be more appropriate to divide the project in smaller chunks/phases and contract on a phase-by-phase basis.
+
+Flexible
+
+More flexible models are Time & Material or Dedicated Team contracts. These are especially suitable for relatively complicated projects. You and your buyer discuss and agree on the specifications of the machine learning solution during the development process. This also means the budget and deadlines are not set in advance. These types of contracts require intense communication with your buyer.
+
+More and more organisations are transitioning to an Agile working model. This means that the overall requirements are determined in less detail and the development takes place in sprints of usually 2-4 weeks. At the end of each sprint, a working product is delivered and based on the progress and user feedback, the project planning can be adapted. Contracting Agile projects is often comparable with Time & Material, but with guarantees for the development speed and quality of the products.
+
+Tips: Listen carefully to your buyer’s ideas, problems and wishes and thoroughly document them. Ask questions to better understand what your buyer wants.
+
+Regularly update your buyer on the progress you are making.
+
+Be prepared to communicate with your buyer during their office hours, even if they are in a different time zone.
+
+If you use a fixed price contract, make clear agreements with your buyer on a structured plan and the expected timeline of the project.
+
+For more information on the different types of contracts, see Cleveroad’s Types of Contracts in Outsourcing: How to Make a Wise Decision.
+
+2. Which European markets offer opportunities for machine learning & AI services?
+
+The market for machine learning & AI is growing exponentially
+
+Global spending on machine learning & AI systems and solutions is expected to increase from €11 billion in 2017 to €17 billion in 2018. For the coming years, an average annual growth of 46% is forecast. A doubling of the number of machine learning projects in large and medium sized companies in 2018 confirms this trend.
+
+Western Europe is the second largest market worldwide
+
+Western Europe is the second largest region in terms of spending on machine learning & AI projects, after the United States of America. The financial sector is leading in Western Europe, with €2.6 billion of AI spending expected for 2018. Large interest in both public and private sector should increase total spending even further, towards €9.4 billion in 2022.
+
+After the financial sector, the retail industry and discrete manufacturing are leading machine learning & AI investors. Spending is highest on use cases such as automated customer service, sales process recommendation, threat intelligence and prevention systems.
+
+Tips: Focus on Western European countries, where machine learning & AI spending is highest.
+
+Study your options in especially the financial sector, as well as opportunities in the retail industry and discrete manufacturing.
+
+3. What trends offer opportunities on the European market for machine learning & AI services?
+
+Digital skills shortage
+
+As the European market for machine learning and AI services is growing fast, there is an increasing need for qualified staff. However, there is a considerable lack of IT training, certification and experience in the European workforce. Due to the rapid technological innovations in IT, the skills of IT-graduates don’t match the needs of the market. The European Commission expects the shortage of IT-skilled staff may reach 756,000 by 2020.
+
+Tip: Promote your company’s professional expertise and experience in machine learning and AI technology. Use references to support your message.
+
+Implementations in new areas
+
+Surya Ramkumar (Director at Microsoft) points out that the impact of artificial intelligence and machine learning will influence daily life, business and society. At the same time large companies indicate that for them, the largest benefits from AI can be achieved through optimising operations, engaging customers, transforming products and services and empowering employees.
+
+The largest growing areas of machine learning application and development include:
+
+Public safety and emergency response
+
+Improved facial recognition through machine learning allows law enforcement and first responders to quickly and accurately obtain relevant information during an emergency or case. An example of such an application is ZIUZ, which applies machine learning to identify child pornography quickly and efficiently. The application of AI in public safety and emergency response has the potential to dramatically improve safety, but may have privacy implications.
+
+Pharmaceutical research and discovery
+
+Machine learning modelling can make it possible to discover which medication must be used for the treatment of certain antibody diseases. Such models have the potential to drastically reduce the time required for appropriate treatment discoveries. Examples of companies involved in applying machine modelling to health care are the start-ups Antiverse and GTN.
+
+Expert shopping advisors and product recommendations
+
+AI has great potential for the retail sector, for example to create automated expert shopping advisors and product recommendations. Another interesting application are automated customer service agents.
+
+Intelligent processing automation
+
+Intelligent processing automation is considered the fourth wave of automation and is also known as ‘no code process automation’. Such no code process automation platforms have enabled companies to take a step forward in automating the long tail of business processes. These processes not only enable companies to move at faster speeds but also in a more intelligent manner.
+
+Sales process recommendations
+
+AI and Machine learning will make sales smarter, beginning with the benefits for prospecting. Machine learning will help identify patterns in data, to provide insights into customer behaviour over time. Additionally, machine learning can help better predict effective solutions to influence customer behaviour. AI can also generate accurate revenue forecasts, providing insights into sales trends and even segment these trends.
+
+Tips: Develop your skills in AI and machine learning technology for (one of) these most promising areas.
+
+Stay informed about the latest trends and technologies, as AI is a fast moving market where new technologies and applications emerge quickly.
+
+Be creative in broadening your scope on AI and machine learning development, as tapping into opportunities in new areas can be a great competitive advantage.
+
+4. What requirements should machine learning & AI services comply with to be allowed on the European market?
+
+What legal and non-legal requirements must you comply with?
+
+The European Group of Ethics’ ethical principles
+
+Laws and regulations concerning AI and machine learning are complicated. Despite AI seeing substantial growth, the gap between regulation and the capability of new systems remains concerning. Therefore the European Economic and Social Committee (EESC) put on the European commission by to take steps in the right direction.
+
+The European Group of Ethics (EGE) has proposed the following fundamental ethical principles for developing AI in the future.
+
+human dignity - autonomous technologies must not violate human dignity autonomy - autonomous systems must not impair the freedom of human beings responsibility - autonomous systems should serve global social/environmental good justice, equality and solidarity - AI should contribute to global justice and equal access to potential benefits and advantages democracy - decisions on regulation of AI development and application should be the result of democratic debate and public engagement rule of law and accountability - rule of law, access to justice and the right to redress and a fair trial ensure the observance of human rights standards and potential AI-specific regulations security, safety, bodily and mental integrity - AI developers must take into account the external safety for environment and users, reliability and internal robustness, as well as emotional safety with respect to human-machine interaction Data protection and privacy - autonomous systems must comply with data protection regulations Sustainability - technology must be in line with human responsibility to ensure basic preconditions for life on our planet, continued prospering for mankind and preservation of a good environment for future generations
+
+Tip: Closely follow the European Union’s development of laws and regulations regarding artificial intelligence.
+
+General Data Protection Regulation
+
+Europe’s new General Data Protection Regulation (GDPR) has come into effect on May 25th 2018. This regulation is designed to protect individuals in Europe from privacy and data breaches. Under the GDPR, any company or individual that processes data is also responsible for its protection. It applies to all companies processing the personal data of persons in Europe, regardless of the company’s location. This means it also applies to you directly.
+
+The personal data this regulation protects can range from a name or email address, to bank details, social media content, a photo or an IP address. Some key consumer rights you must comply with include consent, right to access, data portability and the right to be forgotten. You also need to practice privacy by design, meaning data protection should be included from the onset of designing systems.
+
+Tips: If you process data of European citizens, make sure you comply with the GDPR.
+
+Stay up-to-date about the latest developments regarding GDPR in relation to AI and machine learning technology.
+
+For more information on the GDPR (and other European legislation), see our study about buyer requirements on the European outsourcing market.
+
+Copyright – Legal protection of computer programs
+
+The European Union has established specific rules to protect computer programs by means of copyright.
+
+This Directive on the legal protection of computer programs (2009/24/EC) means that:
+
+you have to make sure not to breach any copyright when placing your computer programme on the market
+
+your products are also protected against unauthorised reproduction
+
+Tip: Read more on the legal protection of computer programs on the website of the European Commission.
+
+What additional requirements do buyers often have?
+
+Agile development
+
+AI technologies are still in their infancy and are far from being standardised solutions. For this reason, companies are using an agile approach towards AI projects. Microsoft sees agile development as an experimental approach in which collaborative, cross-functional teams work in short, iterative project cycles. This increases the ability to explore AI potential, as the constant feedback and short cycle times ensure that the risk of failure at later stages is reduced.
+
+You should become certified in the different forms of agile methodologies, including agile project management and Scrum. Companies are increasingly using these methodologies for most of their software, especially AI and machine learning development. If they choose to work with you, they will expect you to be knowledgeable of and competent in these methodologies.
+
+Tip: Ensure you have agile project management and related competence and certifications.
+
+Voluntary data security ISO standards
+
+Data security is one of the main challenges for service providers. This includes both data protection and recovery systems. Many European buyers expect you to have information security and management systems in place. Especially in industries where security is essential, such as finance and banking or mobile applications. The ISO 27000-series on information security contains common standards for information security.
+
+Tips: Make sure you have effective security processes and systems in place from business-continuity and disaster-recovery to virus protection.
+
+Ask your buyer to what extent they require you to implement a security management system like the ISO 27002 code of practice for information security.
+
+See our study about buyer requirements on the European outsourcing market for more information.
+
+5. What competition do you face on the European machine learning & AI market?
+
+Competition on the European machine learning and AI market does not differ significantly from the outsourcing market in general. Refer to our top 10 tips for doing business with European buyers.
+
+Nearshoring more popular than offshoring
+
+European companies prefer to outsource services to providers within the same country (onshoring). When outsourcing abroad they prefer nearshore locations because of proximity, language, cultural similarities and the little or no time difference. These are usually Eastern European countries, due to their relatively low wages. For example Poland, Bulgaria and Romania.
+
+However, prices in nearshore countries are rising. This development makes service providers in these countries less competitive for offshore service providers. It makes European companies more open towards outsourcing to destinations further away. You can choose to form subcontracting partnerships with these nearshoring providers, or compete with them.
+
+Offshoring destinations with the strongest potential are:
+
+India
+
+China
+
+Malaysia
+
+Indonesia
+
+Brazil
+
+Vietnam
+
+Tips: Limit the possible disadvantages of being offshore. Provide excellent communication, availability in the required time zone and good security and privacy measures.
+
+Differentiate yourself from onshore and nearshore providers to remain competitive. Emphasise how you are different in your marketing message. Do not only compete on price, but also analyse what other advantages you can offer. For example access to skills, specialised industry expertise or around-the-clock operations (24/7).
+
+Research what your competitors are doing right and wrong. This can help you differentiate yourself from them.
+
+Partner with nearshore service providers, as Eastern European companies are looking for cheaper destinations. Many service providers in developing countries have not yet recognised this opportunity.
+
+6. Through what channels can you get your machine learning & AI services on the European market?
+
+Subcontracting by European service providers
+
+Subcontracting by European service providers is your most realistic market entry channel. It means that European service providers subcontract machine learning and AI assignments to you, which end user companies have contracted to them.
+
+Tips: Decide on a business model. Either develop your own machine learning and AI services, or focus on providing services for a European partner.
+
+Target service providers whose size is in line with your capacity.
+
+Focus on companies that serve the same industries as your company.
+
+Attend relevant industry events in your target country to meet potential partners. This also allows you to learn more about their business culture. For example the AI Summit in the United Kingdom and the World Summit AI in the Netherlands.
+
+Use industry associations to find potential customers in Europe. For example Bitkom in Germany, Nederland ICT in the Netherlands and UKITA in the United Kingdom.
+
+National outsourcing associations can also be interesting sources to find potential customers. For example Global Sourcing Association in the United Kingdom, Outsourcing Verband in Germany and Platform Outsourcing in the Netherlands.
+
+Develop good promotional tools, such as a professional company website and a company leaflet. Also invest in Search Engine Marketing, so potential customers can easily find your company online.
+
+Intermediary
+
+You can approach European AI service providers directly, or through an intermediary. A local contact person is an advantage, especially if you are located in a lesser-known outsourcing destination. Intermediaries, such as a consultant/matchmaker or sales/marketing representative, can therefore be an important channel to establish contact with potential buyers.
+
+Refer to our study on finding buyers in the European market.
+
+7. What are the end market prices for machine learning & AI services?
+
+Price would be an important reason for companies in Europe to outsource AI technology services to developing countries. Staff salaries make up a large share of the costs of IT services. This means outsourcing to countries with lower wages can lead to considerable savings. For example, the average annual salary of a software developer in Western Europe is between €36,000 and €50,000. In offshore destinations, this is usually significantly lower.
+
+Tips: Research the average salaries for software developers in your European target country. For example via Payscale, a global database for salary profiles.
+
+Emphasise the potential salary savings in your marketing activities.
+
+Please review our market information disclaimer.

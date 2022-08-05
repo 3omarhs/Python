@@ -1,0 +1,19 @@
+Neural network refers to interconnected populations of neurons or neuron simulations that form the structure and architecture of nervous systems, in animals, humans, and computing systems:
+
+Artificial neural network, a computing system inspired by the biological neural networks found in animal brains
+
+Biological neural network or neural circuit, a collection of physically interconnected neurons that carry out a specific function together
+
+Large scale brain networks, biological neural networks on a larger scale
+
+Convolutional neural network, a class of deep neural networks, most commonly applied to analyzing visual imagery
+
+Deep neural network, an artificial neural network with multiple layers between the input and output layers
+
+Neural networks may also refer to:
+
+Neural Networks (journal), peer-reviewed scientific journal
+
+See also [ edit ]
+
+Topics referred to by the same term
