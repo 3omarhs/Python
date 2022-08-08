@@ -1,3 +1,4 @@
+# edited by 3omar.hs
 # other filters project to see: https://github.com/shyaa23/Snapchat-like-Filters-Using-Computer-Vision-Techniques
 # opencv change images using buttons: https://www.youtube.com/watch?v=7Uhw2nrkqa8
 # use tkinter with pygame: https://python-forum.io/thread-17965.html
