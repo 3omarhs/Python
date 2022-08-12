@@ -96,6 +96,9 @@ oldphoto = ''
 gender = ''
 # images_path_M = 'D:/Backup/PycharmProjects/datasets/10photos0/'
 images_path_M = 'photos/10photos/'
+
+# images_path_M = r'C:/Users/Omar Hassan/Desktop/rr/'
+
 # images_path_M = 'D:/Backup/PycharmProjects/datasets/10photos/'
 # images_path_M = fr'C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos0'
 
@@ -221,11 +224,15 @@ try:
             if (name != 'Unknown'):
                 # img = cv2.imread(r"C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos\Aaron_Pena_0001.png", cv2.IMREAD_UNCHANGED)
                 dim = (276, 276)
-                # img = cv2.imread(f'photos/10photos0/{name}.png', cv2.IMREAD_UNCHANGED)
-                img = cv2.imread(f'{images_path_M}{name}.png', cv2.IMREAD_UNCHANGED)
+                personBG = cv2.imread('photos/white.png', cv2.IMREAD_UNCHANGED)
+                personBG = cv2.resize(personBG, dim)
+                imgBG = overlayPNG(imgBG, personBG, (50, 250))
+
+
+                img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\rr\Abdullah_Gul (4).png", cv2.IMREAD_UNCHANGED)
                 # img = cv2.imread(f'{images_path_M}{name}.jpg', cv2.IMREAD_UNCHANGED)
                 img2 = cv2.resize(img, dim)
-                # img = cv2.resize(img, (350, 350), interpolation= cv2.INTER_AREA)  # cv2.INTER_CUBIC)cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+                # print(img.shape)
                 imgBG = overlayPNG(imgBG, img2, (50, 250))   #(x, y)
             # except:1
         cv2.waitKey(1)
