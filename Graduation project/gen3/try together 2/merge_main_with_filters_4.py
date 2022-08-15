@@ -1,8 +1,5 @@
 import face_recognition
-import os
-import glob
 import argparse
-import sys
 import keyboard
 import cv2
 import numpy as np
@@ -10,8 +7,6 @@ import pygame
 import filter
 import random
 import pickle
-
-
 
 camera_number = 0
 oldphoto = ''
@@ -25,13 +20,6 @@ BG_photo_path = "../photos/BG.jpg"
 white_photo_path = '../photos/white.png'
 images_path_M = '../photos/mens/'
 images_path_F = '../photos/10photos_w/'
-
-
-
-
-
-
-
 
 faceProto = "../AGE-Gender-Detection-main/opencv_face_detector.pbtxt"
 faceModel = "../AGE-Gender-Detection-main/opencv_face_detector_uint8.pb"
@@ -94,7 +82,6 @@ class SimpleFacerec:
     #         self.known_face_names = pickle.load(fp)
     #     print("Encoding images loaded")
 
-
     def load_encoding_images(self, images_path, category):
         with open(f'{encoding_images_path}/{category}_encoding.txt', "rb") as fp:  # Unpickling
             self.known_face_encodings = pickle.load(fp)
@@ -104,50 +91,37 @@ class SimpleFacerec:
 
     def detect_known_faces(self, frame):
         small_frame = cv2.resize(frame, (0, 0), fx=self.frame_resizing, fy=self.frame_resizing)
-        # Find all the faces and face encodings in the current frame of video
-        # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         face_names = []
         for face_encoding in face_encodings:
-            # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding)
             name = "Unknown"
 
-            # # If a match was found in known_face_encodings, just use the first one.
-            # if True in matches:
-            #     first_match_index = matches.index(True)
-            #     name = known_face_names[first_match_index]
-
-            # Or instead, use the known face with the smallest distance to the new face
             face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = self.known_face_names[best_match_index]
-            else:
-                name = self.known_face_names[random.randint(0, len(self.known_face_names))]
-                print(f'randomly selected {name}')
-            face_names.append(name)
+            # else:
+            #     name = self.known_face_names[random.randint(0, len(self.known_face_names))]
+            #     print(f'randomly selected {name}')
+            if len(face_names) <= 2:
+                face_names.append(name)
 
-        # Convert to numpy array to adjust coordinates with frame resizing quickly
         face_locations = np.array(face_locations)
         face_locations = face_locations / self.frame_resizing
         return face_locations.astype(int), face_names
-
-
 
 def getFaceBox(net, frame, conf_threshold=0.75):
     frameOpencvDnn = frame.copy()
     frameHeight = frameOpencvDnn.shape[0]
     frameWidth = frameOpencvDnn.shape[1]
     blob = cv2.dnn.blobFromImage(frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False)
-
     net.setInput(blob)
     detections = net.forward()
     bboxes = []
-
     for i in range(detections.shape[2]):
         confidence = detections[0, 0, i, 2]
         if confidence > conf_threshold:
@@ -157,9 +131,7 @@ def getFaceBox(net, frame, conf_threshold=0.75):
             y2 = int(detections[0, 0, i, 6] * frameHeight)
             bboxes.append([x1, y1, x2, y2])
             cv2.rectangle(frameOpencvDnn, (x1, y1), (x2, y2), (0, 255, 0), int(round(frameHeight / 150)), 8)
-
     return frameOpencvDnn, bboxes
-
 def overlayPNG(imgBack, imgFront, pos=[0, 0]):
     hf, wf, cf = imgFront.shape
     hb, wb, cb = imgBack.shape
@@ -169,22 +141,16 @@ def overlayPNG(imgBack, imgFront, pos=[0, 0]):
     try:
         imgRGBA = cv2.bitwise_and(imgFront, maskBGRA)
     except:
-        # imgRGBA = cv2.bitwise_and(imgFront, maskBGR)
-        return imgBack
+        imgRGBA = cv2.bitwise_and(imgFront, maskBGR)
     imgRGB = cv2.cvtColor(imgRGBA, cv2.COLOR_BGRA2BGR)
-
     imgMaskFull = np.zeros((hb, wb, cb), np.uint8)
     imgMaskFull[pos[1]:hf + pos[1], pos[0]:wf + pos[0], :] = imgRGB
     imgMaskFull2 = np.ones((hb, wb, cb), np.uint8) * 255
     maskBGRInv = cv2.bitwise_not(maskBGR)
     imgMaskFull2[pos[1]:hf + pos[1], pos[0]:wf + pos[0], :] = maskBGRInv
-
     imgBack = cv2.bitwise_and(imgBack, imgMaskFull2)
     imgBack = cv2.bitwise_or(imgBack, imgMaskFull)
-
     return imgBack
-
-
 
 def main_GUI():
     hasFrame, frame = cap.read()
@@ -192,16 +158,8 @@ def main_GUI():
     imgBG[170:650, 725:1365] = frame
     cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
 
-    # if not hasFrame:
-    #     cv2.waitKey()
-    #     break
-
     small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     frameFace, bboxes = getFaceBox(faceNet, small_frame)
-
-    # if not bboxes:
-    #     print("No face Detected, Checking next frame")
-    #     continue
 
     for bbox in bboxes:
         face = small_frame[max(0, bbox[1] - padding):min(bbox[3] + padding, frame.shape[0] - 1),
@@ -219,22 +177,20 @@ def main_GUI():
     for face_loc, name in zip(face_locations, face_names):
         y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
-        cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+        try:
+            cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+        except: 1
         cv2.putText(imgBG, f'The best Haircut For You ', (20, 200), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
         cv2.putText(imgBG, f' Is Like: {name}', (50, 230), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
-        # cv2.putText(frame, (name), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 3)
         imgBG[170:650,
         725:1365] = frame  # all image height = 700-50=650 & - video height"480"        all image width = 1375-10=1365 & - video width"640"
 
         if (name != 'Unknown'):
-            # img = cv2.imread(r"C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos\Aaron_Pena_0001.png", cv2.IMREAD_UNCHANGED)
             dim = (276, 276)
             personBG = cv2.imread(white_photo_path, cv2.IMREAD_UNCHANGED)
             personBG = cv2.resize(personBG, dim)
             imgBG = overlayPNG(imgBG, personBG, (50, 250))
-
-            # img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\rr\Abdullah_Gul (4).png", cv2.IMREAD_UNCHANGED)
             try:
                 img = cv2.imread(f'{images_path}{name}.png', cv2.IMREAD_UNCHANGED)
                 img2 = cv2.resize(img, dim)
@@ -242,21 +198,14 @@ def main_GUI():
                 imgBG = overlayPNG(imgBG, img2, (50, 250))  # (x, y)
             except:
                 1
-        # except:1
     cv2.waitKey(1)
     cv2.imshow("Detection..", imgBG)
-
-
-
-
-
 
 def main_filter(mode_selected):
 
     def show_boundaries(rects, color):
         for (x, y, w, h) in rects:
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 3)
-
 
     def detect_multi_scale(cascade, min_neighbors, min_size):
         return cascade.detectMultiScale(
@@ -267,195 +216,126 @@ def main_filter(mode_selected):
             flags=cv2.CASCADE_SCALE_IMAGE
         )
 
-    try:
-        if __name__ == "__main__":
-            ap = argparse.ArgumentParser()
-            ap.add_argument("-f", "--filter", nargs='+', required=False, help="filters to use")
-            ap.add_argument("-p", "--package", required=False, help="filter package (optional)")
-            ap.add_argument("-b", "--boundaries", required=False, action='store_true',
-                            help="show boundaries of detected areas (optional)")
-            ap.add_argument("-ce", "--cascade_eye", required=False, help="haar cascade for eye detection (optional)")
-            ap.add_argument("-cf", "--cascade_face", required=False, help="haar cascade for face detection (optional)")
-            args = vars(ap.parse_args())
+    # try:
+    if __name__ == "__main__":
+        ap = argparse.ArgumentParser()
+        ap.add_argument("-f", "--filter", nargs='+', required=False, help="filters to use")
+        ap.add_argument("-p", "--package", required=False, help="filter package (optional)")
+        ap.add_argument("-b", "--boundaries", required=False, action='store_true',
+                        help="show boundaries of detected areas (optional)")
+        ap.add_argument("-ce", "--cascade_eye", required=False, help="haar cascade for eye detection (optional)")
+        ap.add_argument("-cf", "--cascade_face", required=False, help="haar cascade for face detection (optional)")
+        args = vars(ap.parse_args())
 
-            #  Creating a face cascade
-            face_cascade_path = CASCADE_DIR + (args["cascade_face"] if args["cascade_face"] else "face.xml")
-            eye_cascade_path = CASCADE_DIR + (args["cascade_eye"] if args["cascade_eye"] else "eye.xml")
+        #  Creating a face cascade
+        face_cascade_path = CASCADE_DIR + (args["cascade_face"] if args["cascade_face"] else "face.xml")
+        eye_cascade_path = CASCADE_DIR + (args["cascade_eye"] if args["cascade_eye"] else "eye.xml")
 
-            face_cascade = cv2.CascadeClassifier(face_cascade_path)
-            eye_cascade = cv2.CascadeClassifier(eye_cascade_path)
+        face_cascade = cv2.CascadeClassifier(face_cascade_path)
+        eye_cascade = cv2.CascadeClassifier(eye_cascade_path)
 
-            #  Init display
-            pygame.init()
-            pygame.display.set_caption("haircut filter")
-            screen = pygame.display.set_mode([640, 480])
+        pygame.init()
+        pygame.display.set_caption("haircut filter")
+        screen = pygame.display.set_mode([640, 480])
 
-            ###*********************************************************************************************************
-            while True:
-            # while mode_selected == 1:
-                #  Read one frame from the video source (webcam)
-                _, my_frame = video_capture.read()
-                frame = my_frame
+        ###*********************************************************************************************************
+        while True:
+            _, my_frame = video_capture.read()
+            frame = my_frame
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
+            eyes = detect_multi_scale(eye_cascade, 50, (10, 10))
+            faces = detect_multi_scale(face_cascade, 50, (30, 30))
+            if args["boundaries"]:
+                show_boundaries(eyes, (255, 0, 0))
+                show_boundaries(faces, (0, 255, 0))
+            screen.fill([0, 0, 0])
+            frame = np.rot90(frame)
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2RGB)
+            frame = pygame.surfarray.make_surface(frame)
+            screen.blit(frame, (0, 0))
+            frame = my_frame
 
-                #  Converted our webcam feed
-                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            frame1 = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
+            eyes = detect_multi_scale(eye_cascade, 50, (10, 10))
+            faces = detect_multi_scale(face_cascade, 50, (30, 30))
+            if args["boundaries"]:
+                show_boundaries(eyes, (255, 0, 0))
+                show_boundaries(faces, (0, 255, 0))
+            screen.fill([0, 0, 0])
+            frame1 = np.rot90(frame1)
+            frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGRA2RGB)
+            frame1 = pygame.surfarray.make_surface(frame1)
+            screen.blit(frame1, (0, 0))
 
-                #  Detect eyes and feces in our frame.
-                eyes = detect_multi_scale(eye_cascade, 50, (10, 10))
-                faces = detect_multi_scale(face_cascade, 50, (30, 30))
+            small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+            frameFace, bboxes = getFaceBox(faceNet, small_frame)
+            for bbox in bboxes:
+                face = small_frame[max(0, bbox[1] - padding):min(bbox[3] + padding, frame.shape[0] - 1),
+                       max(0, bbox[0] - padding):min(bbox[2] + padding, frame.shape[1] - 1)]
+                blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
+                genderNet.setInput(blob)
+                genderPreds = genderNet.forward()
+                gender = genderList[genderPreds[0].argmax()]
+                print("Gender : {}, conf = {:.3f}".format(gender, genderPreds[0].max()))
+            face_locations, face_names = sfr.detect_known_faces(frame)
+            for face_loc, name in zip(face_locations, face_names):
+                y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 3)
 
-                # Show boundaries
-                if args["boundaries"]:
-                    show_boundaries(eyes, (255, 0, 0))
-                    show_boundaries(faces, (0, 255, 0))
+                print(f'you look like: {name}')
 
-                #  Mange screen
-                screen.fill([0, 0, 0])
-                frame = np.rot90(frame)
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2RGB)
-                frame = pygame.surfarray.make_surface(frame)
-                screen.blit(frame, (0, 0))
-
-                # Loop over the list of filters
-                # if args["filter"]:
-                #     for filter_name in args["filter"]:
-                #         filter.show_filter(filter_name, eyes, faces, screen)
-                # elif args["package"]:
-                #     filter.show_filter_package(args["package"], eyes, faces, screen)
-
+                if gender == 'Male':
+                    filter1 = name
                 ############################################################################################################
 
-                # hasFrame, frame = video_capture.read()
-                frame = my_frame
+                if keyboard.is_pressed('q'):  # if key 'q' is pressed
+                    filter1 = "hair1"
+                    print('You choose santabeard filter!')
+                elif keyboard.is_pressed('w'):  # if key 'q' is pressed
+                    filter1 = "hair2"
+                    print('You choose santahat filter!')
+                elif keyboard.is_pressed('e'):  # if key 'q' is pressed
+                    filter1 = "hair3"
+                    print('You choose clownhair filter!')
+                elif keyboard.is_pressed('r'):  # if key 'q' is pressed
+                    filter1 = "hair4"
+                    print('You choose clownnose filter!')
+                elif keyboard.is_pressed('t'):  # if key 'q' is pressed
+                    filter1 = "hair5"
+                    print('You choose mustache filter!')
+                elif keyboard.is_pressed('y'):  # if key 'q' is pressed
+                    filter1 = "hair6"
+                    print('You choose hat filter!')
+                elif keyboard.is_pressed('u'):  # if key 'q' is pressed
+                    filter1 = "hair7"
+                    print('You choose glasses filter!')
+                elif keyboard.is_pressed('i'):  # if key 'q' is pressed
+                    filter1 = "hair8"
+                    print('You choose ballmask filter!')
+                elif keyboard.is_pressed('o'):  # if key 'q' is pressed
+                    filter1 = "hair9"
+                    print('You choose eyeballs filter!')
+            try:
+                filter.show_filter(filter1, eyes, faces, screen)
 
-                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                frame1 = cv2.cvtColor(frame, cv2.COLOR_BGR2BGRA)
-                eyes = detect_multi_scale(eye_cascade, 50, (10, 10))
-                faces = detect_multi_scale(face_cascade, 50, (30, 30))
-                # Show boundaries
-                if args["boundaries"]:
-                    show_boundaries(eyes, (255, 0, 0))
-                    show_boundaries(faces, (0, 255, 0))
-                screen.fill([0, 0, 0])
-                frame1 = np.rot90(frame1)
-                frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGRA2RGB)
-                frame1 = pygame.surfarray.make_surface(frame1)
-                screen.blit(frame1, (0, 0))
-
-                small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-                frameFace, bboxes = getFaceBox(faceNet, small_frame)
-                for bbox in bboxes:
-                    face = small_frame[max(0, bbox[1] - padding):min(bbox[3] + padding, frame.shape[0] - 1),
-                           max(0, bbox[0] - padding):min(bbox[2] + padding, frame.shape[1] - 1)]
-                    blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
-                    genderNet.setInput(blob)
-                    genderPreds = genderNet.forward()
-                    gender = genderList[genderPreds[0].argmax()]
-                    # if gender == 'Male':
-                    #     images_path = images_path_M
-                    # else:
-                    #     images_path = images_path_F
-                    print("Gender : {}, conf = {:.3f}".format(gender, genderPreds[0].max()))
-                face_locations, face_names = sfr.detect_known_faces(frame)
-                for face_loc, name in zip(face_locations, face_names):
-                    y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 3)
-
-                    print(f'you look like: {name}')
-
-                    # if gender == 'Male':
-                        # if '01' in name:
-                        #     filter1 = 'hair1'
-                        # el
-                        # if name == 'Dev Patel (6)':
-                        #     filter1 = 'hair3'
-                        # elif name == 'tom holland (3)':
-                        #     filter1 = 'hair5'
-                        # elif name == 'Unknown':
-                        #     filter1 = 'hair6'
-                        #
-                        # # else:
-                        # #     filter1 = ''
-                        # else:
-                        #     filter1 = 'hair9'
-                    if gender == 'Male':
-                        filter1 = name
-
-                    # if (name != 'Unknown'):
-                    #     # img = cv2.imread(r"C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos\Aaron_Pena_0001.png", cv2.IMREAD_UNCHANGED)
-                    #     dim = (276, 276)
-                    #     # img = cv2.imread(f'photos/10photos0/{name}.png', cv2.IMREAD_UNCHANGED)
-                    #     img = cv2.imread(f'{images_path_M}{name}.png', cv2.IMREAD_UNCHANGED)
-                    #     # img = cv2.imread(f'{images_path_M}{name}.jpg', cv2.IMREAD_UNCHANGED)
-                    #     img2 = cv2.resize(img, dim)
-                    #     # img = cv2.resize(img, (350, 350), interpolation= cv2.INTER_AREA)  # cv2.INTER_CUBIC)cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-                    #     imgBG = overlayPNG(imgBG, img2, (50, 250))  # (x, y)
-                    # except:1
-                    ############################################################################################################
-
-                    # try:  # used try so that if user pressed other than the given key error will not be shown
-                    if keyboard.is_pressed('q'):  # if key 'q' is pressed
-                        filter1 = "hair1"
-                        print('You choose santabeard filter!')
-                    elif keyboard.is_pressed('w'):  # if key 'q' is pressed
-                        filter1 = "hair2"
-                        print('You choose santahat filter!')
-                    elif keyboard.is_pressed('e'):  # if key 'q' is pressed
-                        filter1 = "hair3"
-                        print('You choose clownhair filter!')
-                    elif keyboard.is_pressed('r'):  # if key 'q' is pressed
-                        filter1 = "hair4"
-                        print('You choose clownnose filter!')
-                    elif keyboard.is_pressed('t'):  # if key 'q' is pressed
-                        filter1 = "hair5"
-                        print('You choose mustache filter!')
-                    elif keyboard.is_pressed('y'):  # if key 'q' is pressed
-                        filter1 = "hair6"
-                        print('You choose hat filter!')
-                    elif keyboard.is_pressed('u'):  # if key 'q' is pressed
-                        filter1 = "hair7"
-                        print('You choose glasses filter!')
-                    elif keyboard.is_pressed('i'):  # if key 'q' is pressed
-                        filter1 = "hair8"
-                        print('You choose ballmask filter!')
-                    elif keyboard.is_pressed('o'):  # if key 'q' is pressed
-                        filter1 = "hair9"
-                        print('You choose eyeballs filter!')
-                    # else:
-                    #     filter1 = "mask"
-                    #     print('You didn`t choose a filter!!')
-                # except:1
-
-                try:
-                    # filter.show_filter(filter1, eyes, faces, screen)
-                    # print(f'filter1{filter1}')
-                    filter.show_filter(filter1, eyes, faces, screen)
-                    # filter.show_filter("santahat", eyes, faces, screen)
-
-                except:
-                    1          
-
-                #  Display the resulting frame
-                pygame.display.update()
-            ###*********************************************************************************************************
-                if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
-                    pygame.quit()
-                    return 0
-                elif keyboard.is_pressed('esc'):
-                    pygame.quit()
-                    return -1
-                else:
-                    return 1
-            # When everything is done, release the capture
-            video_capture.release()
-            cv2.destroyAllWindows()
-            pygame.quit()
-    except:1
-
-
-
-
+            except:
+                1
+            pygame.display.update()
+        ###*********************************************************************************************************
+            if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
+                pygame.quit()
+                return 0
+            elif keyboard.is_pressed('esc'):
+                pygame.quit()
+                return -1
+            else:
+                return 1
+        video_capture.release()
+        cv2.destroyAllWindows()
+        pygame.quit()
+    # except:1
 
 sfr = SimpleFacerec()
 print('Male Images Encoding:')
@@ -463,27 +343,22 @@ sfr.load_encoding_images(images_path_M, 'Male')
 print('Female Images Encoding:')
 sfr.load_encoding_images(images_path_F, 'Female')
 
-
-
 while True:
     if mode_selected == 0:
-        try:
-            while mode_selected == 0:
-                main_GUI()
-                if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
-                    cv2.destroyAllWindows()
-                    mode_selected = 1
+        # try:
+        while mode_selected == 0:
+            main_GUI()
+            if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
+                cv2.destroyAllWindows()
+                mode_selected = 1
 
-                elif keyboard.is_pressed('esc'):
-                    cv2.destroyAllWindows()
-                    mode_selected = -1
-                    break
-        except Exception as e:
-            print(e)
-
+            elif keyboard.is_pressed('esc'):
+                cv2.destroyAllWindows()
+                mode_selected = -1
+                break
+        # except Exception as e:
+        #     print(e)
     elif mode_selected == 1:
         mode_selected = main_filter(mode_selected)
-
     else:
-        # break
         exit()

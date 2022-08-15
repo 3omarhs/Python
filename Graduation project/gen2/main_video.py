@@ -46,7 +46,7 @@ class detect_face:
             cv2.imshow("Scan Your face to detect the best hair cut for you", frame)
             if(photoname != 'Unknown'):
                 # img = cv2.imread(f'D:/Backup/PycharmProjects/datasets/500photos/{photoname}.jpg')
-                img = cv2.imread(f'{images_path}/{photoname}.jpg')
+                img = cv2.imread(f'{images_path}/{photoname}.png')
                 cv2.imshow(photoname, img)
                 if oldphoto == '' or oldphoto != photoname:
                     if oldphoto != '':
