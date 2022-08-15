@@ -27,6 +27,7 @@ hotoname = ''
 oldphoto = ''
 gender = ''
 filter1 = ""
+compare_faces_accuracy = 1  # 0 - 1
 # images_path_M = 'D:/Backup/PycharmProjects/datasets/10photos0/'
 # images_path_M = 'D:/Backup/PycharmProjects/datasets/10photos/'
 # images_path_M = fr'C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos0'
@@ -84,7 +85,7 @@ class SimpleFacerec:
         face_names = []
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding)
+            matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding, tolerance=compare_faces_accuracy)
             name = "Unknown"
 
             # # If a match was found in known_face_encodings, just use the first one.
@@ -94,7 +95,9 @@ class SimpleFacerec:
 
             # Or instead, use the known face with the smallest distance to the new face
             face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
+            # print(f'face distances = {face_distances}')
             best_match_index = np.argmin(face_distances)
+            # print(f'best_match_index = {best_match_index}')
             if matches[best_match_index]:
                 name = self.known_face_names[best_match_index]
             face_names.append(name)

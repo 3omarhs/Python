@@ -102,7 +102,8 @@ images_path_M = 'photos/10photos/'
 # images_path_M = 'D:/Backup/PycharmProjects/datasets/10photos/'
 # images_path_M = fr'C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen2\photos\10photos0'
 
-images_path_F = 'D:/Backup/PycharmProjects/datasets/10photos_w/'
+# images_path_F = 'D:/Backup/PycharmProjects/datasets/10photos_w/'
+images_path_F = 'photos/10photos_w/'
 sfr = SimpleFacerec()
 
 print('Male Images Encoding:')
@@ -228,16 +229,17 @@ try:
                 personBG = cv2.resize(personBG, dim)
                 imgBG = overlayPNG(imgBG, personBG, (50, 250))
 
-
-                img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\rr\Abdullah_Gul (4).png", cv2.IMREAD_UNCHANGED)
-                # img = cv2.imread(f'{images_path_M}{name}.jpg', cv2.IMREAD_UNCHANGED)
-                img2 = cv2.resize(img, dim)
-                # print(img.shape)
-                imgBG = overlayPNG(imgBG, img2, (50, 250))   #(x, y)
+                # img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\rr\Abdullah_Gul (4).png", cv2.IMREAD_UNCHANGED)
+                try:
+                    img = cv2.imread(f'{images_path}{name}.png', cv2.IMREAD_UNCHANGED)
+                    img2 = cv2.resize(img, dim)
+                    # print(img.shape)
+                    imgBG = overlayPNG(imgBG, img2, (50, 250))   #(x, y)
+                except:1
             # except:1
         cv2.waitKey(1)
         cv2.imshow("Detection..", imgBG)
 
 
-except Exception as e: print(e)
-# except:1
+# except Exception as e: print(e)
+except:1

@@ -399,7 +399,9 @@ def main():
             video_capture.release()
             cv2.destroyAllWindows()
             pygame.quit()
-    except:1
+    # except:1
+    except Exception as e:
+        print(e)
 
 
 try:
