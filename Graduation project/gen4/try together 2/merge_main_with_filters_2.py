@@ -5,7 +5,7 @@
 # this project link:
 # https://github.com/OlaPietka/Snapchat-Filters
 
-
+# alternative gender detectiqqon CNN project: https://sefiks.com/2020/09/07/age-and-gender-prediction-with-deep-learning-in-opencv/
 
 
 
@@ -277,7 +277,7 @@ def main_GUI():
             imgBG = overlayPNG(imgBG, personBG, (50, 250))
 
             try:
-                # img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\mens\donald trump (1).png", cv2.IMREAD_UNCHANGED)
+                # img = cv2.imread(r"C:\Users\Omar Hassan\Desktop\New folder (5)\Adam Levine\Adam Levine (9).png", cv2.IMREAD_UNCHANGED)
                 img = cv2.imread(f'{images_path}{name}.png', cv2.IMREAD_UNCHANGED)
                 img2 = cv2.resize(img, dim)
                 # print(img.shape)

@@ -11,6 +11,8 @@ import filter
 import random
 import pickle
 
+# current_run = 'train'
+current_run = 'run'
 camera_number = 0
 oldphoto = ''
 gender = ''
@@ -45,52 +47,56 @@ padding = 20
 
 CASCADE_DIR = "data/cascades/"
 
+
 class SimpleFacerec:
     def __init__(self):
         self.known_face_encodings = []
         self.known_face_names = []
         self.frame_resizing = 0.25
 
-    # def load_encoding_images(self, images_path, category):
-    #     images_path = glob.glob(os.path.join(images_path, "*.*"))
-    #
-    #     print("{} encoding images found.".format(len(images_path)))
-    #
-    #     for img_path in images_path:
-    #         img = cv2.imread(img_path)
-    #         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    #
-    #         basename = os.path.basename(img_path)
-    #         (filename, ext) = os.path.splitext(basename)
-    #         try:
-    #             img_encoding = face_recognition.face_encodings(rgb_img)[0]    ##########################################################################
-    #         except:1
-    #
-    #         self.known_face_encodings.append(img_encoding)
-    #         self.known_face_names.append(filename)
-    #     print("Encoding images loaded")
-    #
-    #     with open(f'{encoding_images_path}/{category}_encoding.txt', "wb") as fp:  # Pickling
-    #         pickle.dump(self.known_face_encodings, fp)
-    #
-    #     with open(f'{encoding_images_path}/{category}_names.txt', "wb") as fp:  # Pickling
-    #         pickle.dump(self.known_face_names, fp)
-    #
-    #     self.known_face_encodings = []
-    #     self.known_face_names = []
-    #
-    #     with open(f'{encoding_images_path}/{category}_encoding.txt', "rb") as fp:  # Unpickling
-    #         self.known_face_encodings = pickle.load(fp)
-    #     with open(f'{encoding_images_path}/{category}_names.txt', "rb") as fp:  # Unpickling
-    #         self.known_face_names = pickle.load(fp)
-    #     print("Encoding images loaded")
-
     def load_encoding_images(self, images_path, category):
-        with open(f'{encoding_images_path}/{category}_encoding.txt', "rb") as fp:  # Unpickling
-            self.known_face_encodings = pickle.load(fp)
-        with open(f'{encoding_images_path}/{category}_names.txt', "rb") as fp:  # Unpickling
-            self.known_face_names = pickle.load(fp)
-        print("Encoding images loaded")
+        if current_run == 'train':
+            images_path = glob.glob(os.path.join(images_path, "*.*"))
+            print("{} encoding images found.".format(len(images_path)))
+            for img_path in images_path:
+                img = cv2.imread(img_path)
+                rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                basename = os.path.basename(img_path)
+                (filename, ext) = os.path.splitext(basename)
+                try:
+                    img_encoding = face_recognition.face_encodings(rgb_img)[
+                        0]  ##########################################################################
+                except:
+                    1
+                self.known_face_encodings.append(img_encoding)
+                self.known_face_names.append(filename)
+            print("Encoding images loaded")
+
+            with open(f'{encoding_images_path}/{category}_encoding.txt', "wb") as fp:  # Pickling
+                pickle.dump(self.known_face_encodings, fp)
+
+            with open(f'{encoding_images_path}/{category}_names.txt', "wb") as fp:  # Pickling
+                pickle.dump(self.known_face_names, fp)
+
+            self.known_face_encodings = []
+            self.known_face_names = []
+
+            with open(f'{encoding_images_path}/{category}_encoding.txt', "rb") as fp:  # Unpickling
+                self.known_face_encodings = pickle.load(fp)
+            with open(f'{encoding_images_path}/{category}_names.txt', "rb") as fp:  # Unpickling
+                self.known_face_names = pickle.load(fp)
+            print("Encoding images loaded")
+
+
+
+
+        else:
+            # def load_encoding_images(self, images_path, category):
+            with open(f'{encoding_images_path}/{category}_encoding.txt', "rb") as fp:  # Unpickling
+                self.known_face_encodings = pickle.load(fp)
+            with open(f'{encoding_images_path}/{category}_names.txt', "rb") as fp:  # Unpickling
+                self.known_face_names = pickle.load(fp)
+            print("Encoding images loaded")
 
     def detect_known_faces(self, frame):
         small_frame = cv2.resize(frame, (0, 0), fx=self.frame_resizing, fy=self.frame_resizing)
@@ -107,15 +113,16 @@ class SimpleFacerec:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = self.known_face_names[best_match_index]
-            else:
-                print('unknown detected!!')
-                name = self.known_face_names[random.randint(0, int(len(matches)))]
+            # else:
+            #     print('unknown detected!!')
+            #     name = self.known_face_names[random.randint(0, int(len(matches)))]
             if len(face_names) < 2:
                 face_names.append(name)
 
         face_locations = np.array(face_locations)
         face_locations = face_locations / self.frame_resizing
         return face_locations.astype(int), face_names
+
 
 def getFaceBox(net, frame, conf_threshold=0.75):
     frameOpencvDnn = frame.copy()
@@ -135,6 +142,8 @@ def getFaceBox(net, frame, conf_threshold=0.75):
             bboxes.append([x1, y1, x2, y2])
             cv2.rectangle(frameOpencvDnn, (x1, y1), (x2, y2), (0, 255, 0), int(round(frameHeight / 150)), 8)
     return frameOpencvDnn, bboxes
+
+
 def overlayPNG(imgBack, imgFront, pos=[0, 0]):
     hf, wf, cf = imgFront.shape
     hb, wb, cb = imgBack.shape
@@ -155,11 +164,13 @@ def overlayPNG(imgBack, imgFront, pos=[0, 0]):
     imgBack = cv2.bitwise_or(imgBack, imgMaskFull)
     return imgBack
 
+
 def main_GUI():
     hasFrame, frame = cap.read()
     imgBG = cv2.imread(BG_photo_path)
     imgBG[170:650, 725:1365] = frame
-    cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
+    cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255),
+                6)
 
     small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     frameFace, bboxes = getFaceBox(faceNet, small_frame)
@@ -182,7 +193,8 @@ def main_GUI():
 
         try:
             cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
-        except: 1
+        except:
+            1
         cv2.putText(imgBG, f'The best Haircut For You ', (20, 200), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
         cv2.putText(imgBG, f' Is Like: {name}', (50, 230), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 3)
@@ -204,8 +216,8 @@ def main_GUI():
     cv2.waitKey(1)
     cv2.imshow("Detection..", imgBG)
 
-def main_filter(mode_selected):
 
+def main_filter(mode_selected):
     def show_boundaries(rects, color):
         for (x, y, w, h) in rects:
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 3)
@@ -326,7 +338,7 @@ def main_filter(mode_selected):
             except:
                 1
             pygame.display.update()
-        ###*********************************************************************************************************
+            ###*********************************************************************************************************
             if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
                 pygame.quit()
                 return 0
@@ -339,6 +351,7 @@ def main_filter(mode_selected):
         cv2.destroyAllWindows()
         pygame.quit()
     # except:1
+
 
 sfr = SimpleFacerec()
 print('Male Images Encoding:')
