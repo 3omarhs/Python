@@ -1,6 +1,6 @@
 import glob
 import os
-
+import time
 import face_recognition
 import argparse
 import keyboard
@@ -18,6 +18,7 @@ oldphoto = ''
 gender = ''
 filter1 = ""
 img2 = ''
+tolerance=0.75  #un-accuracy "error" percentage
 mode_selected = 0
 compare_faces_accuracy = 1  # 0 - 1
 encoding_images_path = '../encoded images files'
@@ -105,20 +106,20 @@ class SimpleFacerec:
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         face_names = []
+
         for face_encoding in face_encodings:
-            matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding)
+            matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding, tolerance=tolerance)
             name = "Unknown"
 
             face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = self.known_face_names[best_match_index]
-            # else:
-            #     print('unknown detected!!')
-            #     name = self.known_face_names[random.randint(0, int(len(matches)))]
+            else:
+                print('unknown detected!!')
+                # name = self.known_face_names[random.randint(0, int(len(matches)))]
             if len(face_names) < 2:
                 face_names.append(name)
-
         face_locations = np.array(face_locations)
         face_locations = face_locations / self.frame_resizing
         return face_locations.astype(int), face_names
