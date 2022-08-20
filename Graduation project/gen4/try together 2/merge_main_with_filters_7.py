@@ -13,23 +13,26 @@ import pickle
 
 # current_run = 'train'
 current_run = 'run'
+mode_selected = 0
+tolerance=0.75  #un-accuracy "error" percentage
+compare_faces_accuracy = 1  # 0 - 1
 camera_number = 0
+wait_to_change_time = 2
+
 oldphoto = ''
 gender = ''
 filter1 = ""
-wait_to_change_time = 2
 img2 = ''
 male = ''
+person_name = ''
 old_img = r'C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen4\photos\mens\Ashton Kutcher (4).png'
 saved_time = round(time.time())
-tolerance=0.75  #un-accuracy "error" percentage
-mode_selected = 0
-compare_faces_accuracy = 1  # 0 - 1
 encoding_images_path = '../encoded images files'
 BG_photo_path = "../photos/BG.jpg"
 white_photo_path = '../photos/white.png'
 images_path_M = '../photos/mens/'
-images_path_F = '../photos/10photos_w/'
+images_path_F = '../photos/womens/'
+images_path = ''
 
 faceProto = "../AGE-Gender-Detection-main/opencv_face_detector.pbtxt"
 faceModel = "../AGE-Gender-Detection-main/opencv_face_detector_uint8.pb"
@@ -174,17 +177,20 @@ def main_GUI():
     hasFrame, frame = cap.read()
     imgBG = cv2.imread(BG_photo_path)
     imgBG[170:650, 725:1365] = frame
-    cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255),
-                6)
+    cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255),6)
 
     small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     frameFace, bboxes = getFaceBox(faceNet, small_frame)
 
+    global images_path
+
     for bbox in bboxes:
         face = small_frame[max(0, bbox[1] - padding):min(bbox[3] + padding, frame.shape[0] - 1),
                max(0, bbox[0] - padding):min(bbox[2] + padding, frame.shape[1] - 1)]
-        blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
-        genderNet.setInput(blob)
+        try:
+            blob = cv2.dnn.blobFromImage(face, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
+            genderNet.setInput(blob)
+        except:1
         genderPreds = genderNet.forward()
         gender = genderList[genderPreds[0].argmax()]
         if gender == 'Male':
@@ -200,8 +206,9 @@ def main_GUI():
             cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
         except:
             1
+        global person_name
         cv2.putText(imgBG, f'The best Haircut For You ', (20, 200), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
-        cv2.putText(imgBG, f' Is Like: {name}', (50, 230), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
+        cv2.putText(imgBG, f' Is Like: {person_name}', (50, 230), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 3)
         imgBG[170:650,
         725:1365] = frame  # all image height = 700-50=650 & - video height"480"        all image width = 1375-10=1365 & - video width"640"
@@ -218,6 +225,8 @@ def main_GUI():
             # '''
             global saved_time
             if round(time.time()) > saved_time:
+                person_name = name
+
                 saved_time = round(time.time())
                 saved_time += wait_to_change_time     # 3
                 print('count sec. passed, changing person`s photo   ')

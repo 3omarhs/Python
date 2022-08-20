@@ -7,7 +7,7 @@ import  os
 
 
 dst_path = r"C:\Users\Omar Hassan\Desktop\New folder"
-im_path = r'C:\Users\Omar Hassan\Desktop\redketchup(2)'
+im_path = r'C:\Users\Omar Hassan\Desktop\redketchup(4)'
 
 
 mypath = src_path = im_path
