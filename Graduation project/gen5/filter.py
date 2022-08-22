@@ -3,6 +3,8 @@ import pygame
 FILTER_DIR = "data/filters1/"
 
 
+
+
 def show_filter(filter_name, eyes, faces, screen):
     FILTER_DIR = "data/filters1/"
     try: image = pygame.image.load(FILTER_DIR + filter_name + ".png")
