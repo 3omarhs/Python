@@ -426,22 +426,26 @@ sfr.load_encoding_images(images_path_M, 'Male')
 print('Female Images Encoding:')
 sfr.load_encoding_images(images_path_F, 'Female')
 
-while True:
-    if mode_selected == 0:
-        # try:
-        while mode_selected == 0:
-            main_GUI()
-            if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
-                cv2.destroyAllWindows()
-                mode_selected = 1
 
-            elif keyboard.is_pressed('esc'):
-                cv2.destroyAllWindows()
-                mode_selected = -1
-                break
-        # except Exception as e:
-        #     print(e)
-    elif mode_selected == 1:
-        mode_selected = main_filter(mode_selected)
-    else:
-        exit()
+try:
+    while True:
+        if mode_selected == 0:
+            # try:
+            while mode_selected == 0:
+                main_GUI()
+                if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
+                    cv2.destroyAllWindows()
+                    mode_selected = 1
+
+                elif keyboard.is_pressed('esc'):
+                    cv2.destroyAllWindows()
+                    mode_selected = -1
+                    break
+            # except Exception as e:
+            #     print(e)
+        elif mode_selected == 1:
+            mode_selected = main_filter(mode_selected)
+        else:
+            exit()
+except:
+    pass
