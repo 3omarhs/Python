@@ -1,11 +1,12 @@
 import pygame
+# from overlay_method import process_image
 
 FILTER_DIR = "data/filters_w/"
 
 
 def show_filter(filter_name, eyes, faces, screen):
-    # global FILTER_DIR
-    FILTER_DIR = "data/filters_w/"
+    global FILTER_DIR
+    # FILTER_DIR = "data/filters_w/"
     try: image = pygame.image.load(FILTER_DIR + filter_name + ".png")
     except:
         try:image = pygame.image.load(FILTER_DIR + filter_name[:-9] + ".png")
@@ -43,7 +44,7 @@ def show_filter(filter_name, eyes, faces, screen):
     elif 'Kate Beckinsale' in filter_name:
         for (x, y, w, h) in faces:
             process_image(image, 1.7*w, 1.8*h, x+1.36*w, y-0.35*h, screen)
-    elif 'Angelina Jolie' in filter_name:
+    elif 'Angelina Jolie' in filter_name or 'Lucy Liu' in filter_name or 'Sandra Bullock' in filter_name:
         for (x, y, w, h) in faces:
             process_image(image, 2.5*w, 3*h, x+1.55*w, y-0.3*h, screen)
     else:

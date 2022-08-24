@@ -1,12 +1,13 @@
 import pygame
 
 FILTER_DIR = "data/filters1/"
-
-
+# FILTER_DIR = "C:/Users/Omar Hassan/Desktop/redketchup(8)/"
 
 
 def show_filter(filter_name, eyes, faces, screen):
-    FILTER_DIR = "data/filters1/"
+    # FILTER_DIR = "data/filters1/"
+    global FILTER_DIR
+
     try: image = pygame.image.load(FILTER_DIR + filter_name + ".png")
     except:
         try:image = pygame.image.load(FILTER_DIR + filter_name[:-1] + ".png")
@@ -36,7 +37,7 @@ def show_filter(filter_name, eyes, faces, screen):
         process_image(image, 1.0*w, 1.2*h, x+1.0*w, y-0.4*h, screen)
 
 
-
 def process_image(image, resize_x, resize_y, scale_x, scale_y, screen):
     image = pygame.transform.scale(image, (int(resize_x), int(resize_y)))
     screen.blit(image, (640 - int(scale_x), int(scale_y)))
+
