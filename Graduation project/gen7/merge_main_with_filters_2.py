@@ -14,8 +14,8 @@ import pickle
 
 # current_run = 'train'
 current_run = 'run'
-# mode_selected = 0
-mode_selected = 1
+mode_selected = 0
+# mode_selected = 1
 tolerance=0.80  #un-accuracy "error" percentage
 camera_number = 0
 wait_to_change_time = 2
@@ -40,7 +40,7 @@ images_path_F_single_per = 'photos/womens1/'
 images_path = ''
 Male_list = []
 Female_list = []
-filter3_m = 100
+filter3_m = 0
 filter3_f = 0
 
 faceProto = "AGE-Gender-Detection-main/opencv_face_detector.pbtxt"
