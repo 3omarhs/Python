@@ -1,3 +1,5 @@
+# try pygame with tkinter 60% will work https://arabicprogrammer.com/article/89001260401/
+
 import glob
 import os
 import time

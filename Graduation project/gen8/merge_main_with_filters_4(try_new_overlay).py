@@ -26,7 +26,7 @@ filter1 = filter2 = ""
 img2 = ''
 male = ''
 person_name = ''
-old_img = r'C:\Users\Omar Hassan\PycharmProjects\Graduation project\gen4\photos\mens\Ashton Kutcher (4).png'
+old_img = r'photos\mens\Ashton Kutcher (4).png'
 saved_time_2 = saved_time = round(time.time())
 encoding_images_path = 'encoded images files'
 BG_photo_path = "photos/BG.jpg"
@@ -51,7 +51,6 @@ genderProto = "AGE-Gender-Detection-main/gender_deploy.prototxt"
 genderModel = "AGE-Gender-Detection-main/gender_net.caffemodel"
 
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
-ageList = ['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList = ['Male', 'Female']
 ageNet = cv2.dnn.readNet(ageModel, ageProto)
 genderNet = cv2.dnn.readNet(genderModel, genderProto)
@@ -238,7 +237,8 @@ def main_GUI():
     for face_loc, name in zip(face_locations, face_names):
         y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
         try:
-            cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+            # cv2.putText(frame, (name + ',' + gender), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+            cv2.putText(frame, (gender[0] + ', ' + name), (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
         except:
             1
         global person_name
@@ -415,7 +415,6 @@ sfr.load_encoding_images(images_path_F, 'Female')
 try:
     while True:
         if mode_selected == 0:
-            # try:
             while mode_selected == 0:
                 main_GUI()
                 if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
@@ -426,8 +425,6 @@ try:
                     cv2.destroyAllWindows()
                     mode_selected = -1
                     break
-            # except Exception as e:
-            #     print(e)
         elif mode_selected == 1:
             mode_selected = main_filter(mode_selected)
         else:
