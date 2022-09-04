@@ -12,12 +12,12 @@ import pickle
 
 # current_run = 'train'
 current_run = 'run'
-mode_selected = 0
+mode_selected = 0   # which mode to start run with..
 # mode_selected = 1
 tolerance=0.80  #un-accuracy "error" percentage
-camera_number = 0
-wait_to_change_time = 2
-run_fully = True
+camera_number = 0  # change to change to other camera connected to this device..
+wait_to_change_time = 2  # time to change between persons photos in mode0 and to change haircut in mode1
+run_fully = True  # in second mode to just view haircuts (controlled using arrows) without finding most likely person or gender detection..
 # run_fully = False
 
 oldphoto = ''
@@ -26,8 +26,8 @@ filter1 = filter2 = ""
 img2 = ''
 male = ''
 person_name = ''
-old_img = r'photos\mens\Ashton Kutcher (4).png'
-saved_time_2 = saved_time = round(time.time())
+old_img = r'photos\mens\Ashton Kutcher (4).png'  #first photo define in mode0 (will not be shown but mustn't be null).
+saved_time_2 = saved_time = round(time.time())  # ass millis timer..
 encoding_images_path = 'encoded images files'
 BG_photo_path = "photos/BG.jpg"
 white_photo_path = 'photos/white.png'
@@ -44,21 +44,19 @@ filter3_f = 0
 faceProto = "AGE-Gender-Detection-main/opencv_face_detector.pbtxt"
 faceModel = "AGE-Gender-Detection-main/opencv_face_detector_uint8.pb"
 
-ageProto = "AGE-Gender-Detection-main/age_deploy.prototxt"
-ageModel = "AGE-Gender-Detection-main/age_net.caffemodel"
-
 genderProto = "AGE-Gender-Detection-main/gender_deploy.prototxt"
 genderModel = "AGE-Gender-Detection-main/gender_net.caffemodel"
 
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
 genderList = ['Male', 'Female']
-ageNet = cv2.dnn.readNet(ageModel, ageProto)
+
+#load the network:
 genderNet = cv2.dnn.readNet(genderModel, genderProto)
 faceNet = cv2.dnn.readNet(faceModel, faceProto)
 video_capture = cv2.VideoCapture(camera_number)
+
 cap = video_capture
 padding = 20
-
 CASCADE_DIR = "data/cascades/"
 
 class SimpleFacerec:
@@ -210,10 +208,12 @@ def overlayPNG(imgBack, imgFront, pos=[0, 0]):
     return imgBack
 
 def main_GUI():
+    # read frame:
     hasFrame, frame = cap.read()
     imgBG = cv2.imread(BG_photo_path)
     imgBG[170:650, 725:1365] = frame
     cv2.putText(imgBG, f'Finding Best Haircut For You`r Face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255),6)
+    # creating a smaller frame for better optimization:
     small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     frameFace, bboxes = getFaceBox(faceNet, small_frame)
 
@@ -250,7 +250,7 @@ def main_GUI():
         if (name != 'Unknown'):
             name = name[:-4]
             name1 = name[:-3]
-            name2 = name[:-2]
+            name2 = name[:-5]
             dim = (276, 276)
             personBG = cv2.imread(white_photo_path, cv2.IMREAD_UNCHANGED)
             personBG = cv2.resize(personBG, dim)
@@ -296,7 +296,6 @@ def main_filter(mode_selected):
 
     if __name__ == "__main__":
         face_cascade = cv2.CascadeClassifier('data/cascades/face.xml')
-        eye_cascade = cv2.CascadeClassifier('data/cascades/eye.xml')
 
         while True:
             global name
@@ -304,7 +303,6 @@ def main_filter(mode_selected):
             _, my_frame = video_capture.read()
             frame = my_frame
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            eyes = detect_multi_scale(eye_cascade, 50, (10, 10))
             faces = detect_multi_scale(face_cascade, 50, (30, 30))
             global run_fully
             global gender
@@ -351,12 +349,14 @@ def main_filter(mode_selected):
 
                     if gender == 'Male':
                         try:
-                            frame = filter.show_filter(filter2, eyes, faces, frame)
+                            frame = filter.show_filter(filter2, faces, frame)
+                            cv2.putText(imgBG, f'M, {name[:3]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (0, 255, 255), 6)
                         except:
                             1
                     else:
                         try:
-                            frame = filter_w.show_filter(filter2, eyes, faces, frame)
+                            frame = filter_w.show_filter(filter2, faces, frame)
+                            cv2.putText(imgBG, f'F, {name[:3]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (0, 255, 255), 6)
                         except:
                             1
             else:
@@ -375,7 +375,8 @@ def main_filter(mode_selected):
                         time.sleep(0.1)
                     print(Male_list[filter3_m])
                     try:
-                        frame = filter.show_filter(str(Male_list[filter3_m]), eyes, faces, frame)
+                        frame = filter.show_filter(str(Male_list[filter3_m]), faces, frame)
+                        cv2.putText(imgBG, f'M, {str(Male_list[filter3_m])[:3]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 6)
                     except:
                         1
                 else:
@@ -391,7 +392,8 @@ def main_filter(mode_selected):
                         time.sleep(0.1)
                     print(Female_list[filter3_f])
                     try:
-                        frame = filter_w.show_filter(str(Female_list[filter3_f]), eyes, faces, frame)
+                        frame = filter_w.show_filter(str(Female_list[filter3_f]), faces, frame)
+                        cv2.putText(imgBG, f'F, {str(Female_list[filter3_f])[:3]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 6)
                     except:
                         1
             cv2.putText(imgBG, f'Placing the haircut on your face..', (70, 70), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
@@ -412,22 +414,22 @@ print('Female Images Encoding:')
 sfr.load_encoding_images(images_path_F, 'Female')
 
 
-try:
-    while True:
-        if mode_selected == 0:
-            while mode_selected == 0:
-                main_GUI()
-                if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
-                    cv2.destroyAllWindows()
-                    mode_selected = 1
+# try:
+while True:
+    if mode_selected == 0:
+        while mode_selected == 0:
+            main_GUI()
+            if keyboard.is_pressed('q') or keyboard.is_pressed(' '):
+                cv2.destroyAllWindows()
+                mode_selected = 1
 
-                elif keyboard.is_pressed('esc'):
-                    cv2.destroyAllWindows()
-                    mode_selected = -1
-                    break
-        elif mode_selected == 1:
-            mode_selected = main_filter(mode_selected)
-        else:
-            exit()
-except:
-    pass
+            elif keyboard.is_pressed('esc'):
+                cv2.destroyAllWindows()
+                mode_selected = -1
+                break
+    elif mode_selected == 1:
+        mode_selected = main_filter(mode_selected)
+    else:
+        exit()
+# except:
+#     pass
