@@ -422,16 +422,14 @@ def main_filter(mode_selected):
                             y = y1+((y2-y1)/2)
                             # x = x1
                             # y = y1
-                            cv2.putText(imgBG, f'M, {name[:1]}', (70, 170), cv2.FONT_HERSHEY_PLAIN,
-                                        4, (0, 255, 255), 6)
+                            cv2.putText(imgBG, f'M, {name[:1]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (0, 255, 255), 6)
                             process_image(image, w*1.05, h*1.05, x1+(0.1*h/5), y1-(2.5* h/5), frame)
                             ######################################################################
                         except Exception as e: print(e)
                     else:
                         try:
                             frame = filter_w.show_filter(filter2, eyes, faces, frame)
-                            cv2.putText(imgBG, f'F, {name[:1]}', (70, 170), cv2.FONT_HERSHEY_PLAIN,
-                                        4, (0, 255, 255), 6)
+                            cv2.putText(imgBG, f'F, {name[:1]}', (70, 170), cv2.FONT_HERSHEY_PLAIN, 4, (0, 255, 255), 6)
                         except:
                             1
 

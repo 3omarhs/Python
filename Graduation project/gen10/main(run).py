@@ -167,7 +167,7 @@ def getFaceBox(net, frame, conf_threshold=threshold_of_read_face):
     frameOpencvDnn = frame.copy()
     frameHeight = frameOpencvDnn.shape[0]
     frameWidth = frameOpencvDnn.shape[1]
-    blob = cv2.dnn.blobFromImage(frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False)     # function returns a blob which is our input image after mean subtraction, normalizing, and channel swapping.
+    blob = cv2.dnn.blobFromImage(frameOpencvDnn, 1.0, (300, 300), [104, 117, 123], True, False)     # "read caffe model" function returns a blob which is our input image after mean subtraction, normalizing, and channel swapping.
     net.setInput(blob)
     detections = net.forward()
     bboxes = []
@@ -291,7 +291,7 @@ def main_GUI():
     cv2.waitKey(1)  # read and show image
     cv2.imshow("Detection..", imgBG)  # read and show image
 
-def main_filter(mode_selected):
+def filter_GUI(mode_selected):
     def show_boundaries(rects, color):
         for (x, y, w, h) in rects:
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 3)  # draw rectangle on photo “usually used for face boundaries”
@@ -447,7 +447,7 @@ try:
                     mode_selected = -1
                     break
         elif mode_selected == 1:
-            mode_selected = main_filter(mode_selected)
+            mode_selected = filter_GUI(mode_selected)
         else:
             exit()
 except:
